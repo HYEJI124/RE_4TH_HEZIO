@@ -172,3 +172,25 @@ print()
    - 반복문보다 슬라이싱이 일반적으로 더 빠름
 
 """
+
+# 리스트 컴프리헨션 연습
+
+# 문제 1. 제곱값 리스트 만들기
+# 1부터 10까지의 숫자에 대해, 각 수의 제곱값을 요소로 갖는 리스트를 리스트 컴프리헨션으로 생성하세요.
+squares = [x ** 2 for x in range(11)]
+print(squares)
+print()
+
+# 문제 2. 3의 배수만 리스트로 만들기
+# 1부터 50까지의 수 중에서 3의 배수만 포함된 리스트를
+# 리스트 컴프리헨션으로 만들어 출력하세요.
+new_list = [i for i in range(1, 50) if i % 3 == 0]
+print(new_list)
+print()
+
+# 문제 3. 문자열 리스트에서 길이가 5 이상인 단어만 뽑기
+# 위 리스트에서 글자 수가 5 이상인 단어들만 리스트 컴프리헨션으로 추출하여 출력하세요.
+fruits = ["apple", "fig", "banana", "plum", "cherry", "pear", "orange"]
+
+new_list = [fruit for fruit in fruits if len(fruit) >= 5]
+print(new_list)
