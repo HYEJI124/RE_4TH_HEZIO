@@ -1,0 +1,326 @@
+/*
+  Grid란?
+  - CSS의 2차원 레이아웃 시스템
+  - 행(row)과 열(column)을 동시에 제어하여 복잡한 레이아웃 구현
+
+  FlexBox vs Grid:
+  - FlexBox: 1차원 (한 방향만 제어)
+    [1] [2] [3] [4]  ← 가로만 또는 세로만
+
+  - Grid: 2차원 (행과 열을 동시에 제어)
+    [1] [2] [3]  ← 행과 열을
+    [4] [5] [6]     동시에 제어
+    [7] [8] [9]
+
+  언제 Grid를 사용할까?
+  - 복잡한 페이지 레이아웃 (헤더, 사이드바, 메인, 푸터)
+  - 갤러리, 카드 그리드
+  - 대시보드, 데이터 테이블
+  - 정교한 위치 제어가 필요한 경우
+*/
+
+/*
+  Grid 핵심 개념
+
+1. Grid 라인 (Grid Line)
+열과 행을 구분하는 선
+┌─1─┬─2─┬─3─┐
+1   │   │   │
+├───┼───┼───┤
+2   │   │   │
+└───┴───┴───┘
+
+2. Grid 트랙 (Grid Track)
+두 라인 사이의 공간 (행 또는 열)
+[트랙1] [트랙2] [트랙3]
+
+3. Grid 셀 (Grid Cell)
+가장 작은 단위 (하나의 칸)
+[셀]
+
+4. Grid 영역 (Grid Area)
+여러 셀을 합친 사각형 영역
+[영  역]
+[     ]
+*/
+
+/* 
+   기본 Grid 컨테이너
+   
+학습 목표
+1. grid-template-columns: 열 정의
+2. grid-template-rows: 행 정의
+3. gap: 간격 설정
+4. 다양한 크기 단위 (px, %, fr, repeat())
+*/
+
+.container {
+  display: grid; /* Grid 활성화 */
+  background-color: #f0f0f0;
+  padding: 20px;
+
+/* 
+   grid-template-columns: 열(세로선) 정의
+     
+값의 개수 = 열의 개수
+각 값 = 각 열의 너비
+*/
+
+/* 방법 1: 고정 크기 (px) */
+/* 3개의 열, 각각 200px */
+/* grid-template-columns: 200px 200px 200px; */
+
+/* 방법 2: 서로 다른 크기 */
+/* 3개의 열, 100px, 150px, 200px */
+/* grid-template-columns: 100px 150px 200px; */
+
+/* 방법 3: 백분율 (%) */
+/* 전체 너비를 비율로 분할 */
+/* grid-template-columns: 25% 50% 25%; */
+
+/* 
+   fr 단위 (fraction - 분수)
+     
+남은 공간을 비율로 분배
+- 1fr 1fr 1fr = 1:1:1 비율
+- 2fr 1fr = 2:1 비율
+*/
+
+/* 방법 4: fr 단위 - 균등 분할 */
+/* 3개 열, 각각 같은 크기 */
+/* grid-template-columns: 1fr 1fr 1fr; */
+
+/* 방법 5: fr 비율 */
+/* 2:1:1 비율로 분할 */
+/* grid-template-columns: 2fr 1fr 1fr; */
+
+/* 방법 6: 고정 + 유동 혼합 */
+/* 양쪽 1fr, 가운데 고정 200px */
+/* grid-template-columns: 1fr 200px 1fr; */
+
+/* 
+   repeat() 함수
+     
+반복되는 패턴을 간단하게 작성
+repeat(반복횟수, 크기)
+*/
+
+/* 방법 7: repeat() - 같은 크기 반복 */
+/* 3개의 열, 각 1fr */
+/* grid-template-columns: repeat(3, 1fr); */
+
+/* 3개의 열, 각 200px */
+/* grid-template-columns: repeat(3, 200px); */
+
+/* 방법 8: repeat() - 패턴 반복 */
+/* 200px, 100px를 2번 반복 = 4개 열 */
+/* grid-template-columns: repeat(2, 200px 100px); */
+
+/* 
+   grid-template-rows: 행(가로선) 정의
+     
+사용법은 grid-template-columns와 동일
+*/
+
+/* 2개의 행, 100px과 200px */
+/* grid-template-rows: 100px 200px; */
+
+/* 명시하지 않으면 콘텐츠 크기에 맞춰 자동 생성 */
+grid-template-rows: auto;
+
+/* 
+   gap: 셀 사이 간격
+     
+margin 대신 gap 사용 권장
+*/
+
+gap: 20px; /* 행과 열 모두 20px */
+
+/* 세로(행) 20px, 가로(열) 10px */
+/* gap: 20px 10px; */
+
+/* 개별 설정 */
+/* row-gap: 20px; */    /* 행 간격만 */
+/* column-gap: 10px; */  /* 열 간격만 */
+}
+
+/* 
+   minmax() 함수
+   
+최소값과 최대값 사이에서 크기 결정
+minmax(최소값, 최대값)
+
+반응형 레이아웃에 유용
+*/
+
+/* 예시: 최소 100px, 최대 1fr */
+/* grid-template-columns: repeat(3, minmax(100px, 1fr)); */
+
+/* 
+   auto-fill vs auto-fit
+   
+화면 크기에 따라 열 개수 자동 조정
+
+auto-fill: 빈 공간에 빈 트랙 생성
+auto-fit: 빈 공간을 기존 트랙이 차지
+*/
+
+/* 예시: 최소 200px 열을 가능한 많이 배치 */
+/* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+/* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+
+.item {
+  background-color: burlywood;
+  font-size: 48px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #8b7355;
+}
+
+/* 
+Grid 아이템 배치
+   
+학습 목표
+1. grid-column: 열 방향 영역 지정
+2. grid-row: 행 방향 영역 지정
+3. span: 여러 칸 차지하기
+
+Grid 라인 번호:
+열 라인:  1    2    3    4
+        ┌────┬────┬────┐
+행 라인 1 │    │    │    │
+        ├────┼────┼────┤
+       2│    │    │    │
+        ├────┼────┼────┤
+       3│    │    │    │
+        └────┴────┴────┘
+*/
+
+.item1 {
+  background-color: #ff6b6b;
+
+/* 
+   grid-column: 열 방향 위치 지정
+*/
+
+/* 방법 1: 시작 라인 / 끝 라인 */
+/* 1번 라인에서 3번 라인까지 (2칸 차지) */
+/* grid-column: 1 / 3; */
+
+/* 방법 2: span 키워드 */
+/* 현재 위치에서 2칸 차지 */
+grid-column: span 2;
+
+/* 방법 3: 시작 / span */
+/* 2번 라인에서 시작해서 3칸 */
+/* grid-column: 2 / span 3; */
+
+/* 
+   grid-row: 행 방향 위치 지정
+*/
+
+  /* 1번 라인에서 3번 라인까지 (2칸 차지) */
+  /* grid-row: 1 / 3; */
+
+  /* 2칸 차지 */
+  grid-row: span 2;
+}
+
+/* 
+   grid-area: 영역 이름으로 배치
+   
+grid-area를 사용하면 더 직관적인 레이아웃 가능
+
+사용법
+1. 아이템에 이름 지정: grid-area: 이름;
+2. 컨테이너에서 배치: grid-template-areas
+*/
+
+/* 예시: 페이지 레이아웃
+.container {
+  grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+*/
+
+/* 
+   Grid 정렬
+   
+FlexBox와 유사한 정렬 속성 사용
+
+컨테이너 속성
+- justify-items: 셀 내부에서 가로 정렬
+- align-items: 셀 내부에서 세로 정렬
+- justify-content: 그리드 전체 가로 정렬
+- align-content: 그리드 전체 세로 정렬
+
+아이템 속성
+- justify-self: 개별 아이템 가로 정렬
+- align-self: 개별 아이템 세로 정렬
+*/
+
+/* 예시
+.container {
+  justify-items: center;  셀 안에서 가로 중앙
+  align-items: center;    셀 안에서 세로 중앙
+}
+
+.item2 {
+  justify-self: end;      이 아이템만 오른쪽 정렬
+  align-self: start;      이 아이템만 위쪽 정렬
+}
+*/
+
+/* 
+Grid 속성 정리 요약
+   
+   컨테이너 속성 (부모)
+   ├─ display: grid              → Grid 활성화
+   ├─ grid-template-columns      → 열 정의
+   ├─ grid-template-rows         → 행 정의
+   ├─ grid-template-areas        → 영역 이름으로 레이아웃 정의
+   ├─ gap                        → 간격
+   ├─ justify-items              → 셀 내부 가로 정렬
+   ├─ align-items                → 셀 내부 세로 정렬
+   ├─ justify-content            → 그리드 전체 가로 정렬
+   └─ align-content              → 그리드 전체 세로 정렬
+
+   아이템 속성 (자식)
+   ├─ grid-column                → 열 위치/크기
+   ├─ grid-row                   → 행 위치/크기
+   ├─ grid-area                  → 영역 이름 또는 단축 속성
+   ├─ justify-self               → 개별 가로 정렬
+   └─ align-self                 → 개별 세로 정렬
+
+   자주 사용하는 패턴
+
+   1. 균등 3열 그리드
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+
+   2. 반응형 그리드 (최소 200px)
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+
+   3. 페이지 레이아웃
+      display: grid;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+
+   4. 중앙 정렬 그리드
+      display: grid;
+      place-items: center;  /* justify-items + align-items 
+*/

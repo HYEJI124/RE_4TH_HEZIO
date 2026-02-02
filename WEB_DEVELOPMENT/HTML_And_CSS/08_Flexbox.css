@@ -1,0 +1,440 @@
+/* CSS FlexBox 학습 자료 */
+
+/*
+  FlexBox란?
+  - CSS의 1차원 레이아웃 시스템
+  - 컨테이너 내부의 아이템들을 효율적으로 배치, 정렬, 분배하는 방법
+
+  기존 방식 vs FlexBox
+  - 기존 (float, position): 복잡하고 제한적
+  - FlexBox의 장점:
+    1. 간단한 문법으로 복잡한 레이아웃 구현
+    2. 수직 정렬이 매우 쉬움
+    3. 유연한 크기 조정 (flex-grow, flex-shrink)
+    4. 반응형 레이아웃 구현이 용이
+    5. 아이템 순서 변경 가능 (HTML 수정 없이)
+*/
+
+/*
+  FlexBox 핵심 개념: 주축(Main Axis)과 교차축(Cross Axis)
+
+  - 주축(Main Axis): flex-direction이 정하는 방향
+    * row일 때: 가로 방향 →
+    * column일 때: 세로 방향 ↓
+
+  - 교차축(Cross Axis): 주축에 수직인 방향
+    * row일 때: 세로 방향 ↓
+    * column일 때: 가로 방향 →
+*/
+
+/* 기본 FlexBox 컨테이너 (.container) */
+
+/* 
+1. flex-direction: 주축 방향 설정
+2. justify-content: 주축 정렬
+3. align-items: 교차축 정렬
+
+실습 방법
+- HTML에서 .container 주석을 해제
+- 아래 주석을 하나씩 해제하며 동작을 확인 */
+
+.container {
+  height: 700px;
+  background-color: rgb(230, 230, 230);
+
+  /* Step 1: FlexBox 활성화 */
+  display: flex;
+
+  /* flex-direction: 주축 방향 설정 */
+
+  /* 기본값: 가로 방향 → */
+  flex-direction: row;
+
+  /* 가로 역순 ← */
+  /* flex-direction: row-reverse; */
+
+  /* 세로 방향 ↓ */
+  /* flex-direction: column; */
+
+  /* 세로 역순 ↑ */
+  /* flex-direction: column-reverse; */
+
+  /* justify-content: 주축 정렬
+      (flex-direction: row 기준 → 가로 방향 정렬) */
+
+  /* 왼쪽 정렬 (기본값) */
+  justify-content: flex-start;
+
+  /* 오른쪽 정렬 */
+  /* justify-content: flex-end; */
+
+  /* 가운데 정렬 - 가장 많이 사용 */
+  justify-content: center;
+
+  /* 양 끝 정렬 - 첫 아이템은 시작점, 마지막 아이템은 끝점 */
+  /* justify-content: space-between; */
+
+  /* 균등 분배 - 양 끝에도 절반 크기의 여백 */
+  /* justify-content: space-around; */
+
+  /* 완전 균등 분배 - 모든 여백이 동일 */
+  /* justify-content: space-evenly; */
+
+  /* align-items: 교차축 정렬
+      (flex-direction: row 기준 → 세로 방향 정렬) */
+
+  /* 컨테이너 높이만큼 늘림 (기본값) */
+  align-items: stretch;
+
+  /* 위쪽 정렬 */
+  /* align-items: flex-start; */
+
+  /* 아래쪽 정렬 */
+  /* align-items: flex-end; */
+
+  /* 가운데 정렬 - 가장 많이 사용 */
+  align-items: center;
+
+  /* 텍스트 베이스라인 기준 정렬 */
+  /* align-items: baseline; */
+}
+
+/* justify-content 시각적 비교
+   (아이템을 [1][2][3]으로 표현, _는 빈 공간)
+
+flex-start:    [1][2][3]___________
+
+flex-end:      ___________[1][2][3]
+
+center:        _____[1][2][3]______
+
+space-between: [1]________[2]________[3]
+
+space-around:  __[1]____[2]____[3]__
+               ↑  ↑    ↑  ↑    ↑  ↑
+               양끝 여백이 아이템 사이 여백의 절반
+
+space-evenly:  ___[1]___[2]___[3]___
+               ↑   ↑   ↑   ↑   ↑   ↑
+               모든 여백이 동일
+*/
+
+.item {
+  padding: 20px;
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  font-size: 36px;
+}
+
+/* 
+전역 스타일 초기화: 모든 요소의 기본 여백을 제거하고 box-sizing을 설정
+- margin: 0, padding: 0 → 브라우저 기본 여백 제거
+- box-sizing: border-box → padding과 border를 width/height에 포함
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+네비게이션바 (.navbar) - FlexBox를 활용한 실무 예제
+
+레이아웃 구조:
+[로고]                    [메뉴1 메뉴2 메뉴3 메뉴4]
+
+핵심 속성
+- justify-content: space-between
+   → 로고와 메뉴를 양 끝에 배치
+- align-items: center
+   → 세로 중앙 정렬
+*/
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* 양쪽 끝 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  background-color: #2c3e50; /* 네비 배경색 */
+  padding: 15px 30px; /* 상하 15px, 좌우 30px */
+}
+
+.logo {
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* 메뉴도 FlexBox로 가로 정렬 */
+.menu {
+  display: flex; /* 메뉴 아이템을 가로로 배치 */
+  list-style: none; /* 리스트 마커(•) 제거 */
+  gap: 30px; /* 메뉴 아이템 사이 간격 30px */
+}
+
+.menu a {
+  color: white;
+  font-size: 24px;
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 
+flex-wrap과 개별 아이템 속성 (.container1)
+
+학습할 속성
+1. flex-wrap: 줄바꿈 처리
+2. gap: 아이템 간격
+3. flex-basis: 아이템 기본 크기
+4. flex-grow: 남은 공간 확장
+5. flex-shrink: 공간 부족 시 축소
+6. align-self: 개별 아이템 정렬
+7. order: 시각적 순서 변경
+
+실습 방법
+- HTML에서 .container1 주석 해제
+- 브라우저 창 크기를 조절하며 동작 확인
+*/
+
+.container1 {
+  height: 500px;
+  display: flex;
+
+/* flex-wrap: 줄바꿈 처리 */
+
+  /* 기본값: 한 줄로만 표시 (아이템이 축소됨) */
+  flex-wrap: nowrap;
+
+  /* 여러 줄 허용 - 공간이 부족하면 다음 줄로 */
+  /* flex-wrap: wrap; */
+
+  /* 역순 줄바꿈 - 아래에서 위로 */
+  /* flex-wrap: wrap-reverse; */
+
+  align-items: center;
+
+/* gap: 아이템 사이 간격 
+- margin 대신 gap을 사용하면 더 간편함 */
+
+  /* 세로 가로 모두 20px */
+  gap: 20px;
+
+  /* 세로 20px, 가로 10px */
+  /* gap: 20px 10px; */
+
+  /* 세로만 10px */
+  /* row-gap: 10px; */
+
+  /* 가로만 20px */
+  /* column-gap: 20px; */
+}
+
+.item0 {
+  height: 200px;
+  width: 200px;
+  background-color: green;
+  font-size: 48px;
+  color: white;
+
+/* 
+flex-basis: 아이템의 기본 크기
+
+- width/height 대신 flex-basis 사용 권장
+- flex-direction에 따라 적용 방향이 달라짐 
+*/
+
+  /* 고정 크기 200px */
+  /* flex-basis: 200px; */
+
+  /* 컨테이너의 33% */
+  /* flex-basis: 33%; */
+
+  /* 콘텐츠 크기에 맞춤 (기본값) */
+  flex-basis: auto;
+}
+
+/* 
+flex-grow: 남은 공간 차지하기
+
+값: 0 이상의 숫자 (기본값 0)
+- 0: 확장하지 않음
+- 1: 남은 공간을 비율대로 차지
+- 2: 다른 아이템의 2배 공간 차지
+
+예시:
+item1(flex-grow: 1), item2(flex-grow: 2)
+→ 남은 공간을 1:2 비율로 나눔
+*/
+
+.item1 {
+  /* flex-grow: 1; */
+
+/* 
+flex-shrink: 공간 부족 시 축소 비율
+
+값: 0 이상의 숫자 (기본값 1)
+- 0: 축소하지 않음 (크기 유지)
+- 1: 기본 축소 (다른 아이템과 동일하게)
+- 2: 다른 아이템보다 2배 더 축소
+*/
+
+  /* 기본값: 공간 부족 시 축소됨 */
+  flex-shrink: 1;
+
+  /* 축소 안 함 - 크기 유지 */
+  /* flex-shrink: 0; */
+
+  /* 더 많이 축소됨 */
+  /* flex-shrink: 2; */
+
+/* 
+align-self: 개별 아이템의 교차축 정렬
+     
+align-items는 모든 아이템에 적용
+align-self는 특정 아이템만 다르게 정렬
+*/
+
+  align-self: flex-start;
+
+/* 
+order: 시각적 순서 변경
+     
+HTML 구조는 그대로 두고 화면상 순서만 변경
+값: 정수 (기본값 0)
+- 작은 숫자일수록 앞에 배치
+- 음수도 가능
+*/
+
+  order: 0;
+}
+
+.item2 {
+  /* flex-grow: 2; */
+  align-self: center;
+  order: -1; /* 가장 앞으로 */
+}
+
+.item3 {
+  /* flex-grow: 1; */
+  align-self: flex-end;
+  order: 999; /* 가장 뒤로 */
+}
+
+/* 
+align-content - 여러 줄 정렬 (.container2)
+   
+학습 목표
+- align-items와 align-content의 차이점 이해
+- 여러 줄로 나뉜 아이템들의 정렬 방법
+
+핵심 개념
+┌─────────────────────────────────┐
+│  align-items:                   │  한 줄 내에서
+│  [1] [2] [3]  ← 이 줄 안에서       │  아이템 정렬
+│  [4] [5]      ← 이 줄 안에서       │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│  align-content:                 │  줄 전체를
+│  [1] [2] [3]  ← 첫 번째 줄        │  컨테이너 내에서
+│  [4] [5]      ← 두 번째 줄        │  정렬
+└─────────────────────────────────┘
+
+사용 조건
+- flex-wrap: wrap 필수 (여러 줄이 있어야 함)
+- 컨테이너에 여유 공간이 있어야 함
+
+실습 방법:
+- 아래 주석을 하나씩 해제하며 동작 확인
+- 브라우저 창 높이를 조절하며 변화 관찰
+*/
+
+.container2 {
+  height: 500px;
+  display: flex;
+
+  /* 여러 줄 허용 (필수!) */
+  flex-wrap: wrap;
+
+/* 
+align-content: 여러 줄의 정렬
+justify-content와 유사하지만 교차축 방향 
+*/
+
+  /* 위쪽 정렬 */
+  /* align-content: flex-start; */
+
+  /* 아래쪽 정렬 */
+  /* align-content: flex-end; */
+
+  /* 가운데 정렬 */
+  /* align-content: center; */
+
+  /* 양 끝 정렬 - 첫 줄은 위, 마지막 줄은 아래 */
+  /* align-content: space-between; */
+
+  /* 균등 분배 - 위아래 절반 여백 */
+  /* align-content: space-around; */
+
+  /* 완전 균등 분배 - 모든 여백 동일 */
+  /* align-content: space-evenly; */
+
+  /* 컨테이너 높이만큼 늘림 (기본값) */
+  align-content: stretch;
+}
+
+.item00 {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(90, 83, 22);
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+}
+
+/* 
+FlexBox 속성 정리 요약
+   
+   컨테이너 속성 (부모)
+   ├─ display: flex          → FlexBox 활성화
+   ├─ flex-direction         → 주축 방향 (row, column)
+   ├─ justify-content        → 주축 정렬
+   ├─ align-items            → 교차축 정렬 (한 줄)
+   ├─ align-content          → 교차축 정렬 (여러 줄)
+   ├─ flex-wrap              → 줄바꿈 허용
+   └─ gap                    → 아이템 간격
+
+   아이템 속성 (자식)
+   ├─ flex-grow              → 확장 비율
+   ├─ flex-shrink            → 축소 비율
+   ├─ flex-basis             → 기본 크기
+   ├─ align-self             → 개별 정렬
+   └─ order                  → 시각적 순서
+
+   자주 사용하는 조합
+
+   1. 가로 중앙 정렬
+      display: flex;
+      justify-content: center;
+
+   2. 세로 중앙 정렬
+      display: flex;
+      align-items: center;
+
+   3. 완벽한 중앙 정렬
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+   4. 양쪽 끝 정렬 (네비게이션)
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+   5. 반응형 그리드
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+*/
